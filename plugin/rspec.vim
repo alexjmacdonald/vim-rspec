@@ -48,7 +48,8 @@ endfunction
 function! s:RunSpecs(spec_location, ...)
   let s:rspec_flags = join(a:000, ' ')
   let s:rspec_command = substitute(s:RspecCommand(), "{spec}", s:rspec_flags . "{spec}", "g")
-  let s:rspec_command = substitute(s:RspecCommand(), "{spec}", a:spec_location, "g")
+  let s:rspec_command = substitute(s:rspec_command, "{spec}", a:spec_location, "g")
+
 
   execute s:rspec_command
 endfunction
