@@ -11,6 +11,11 @@ function! RunAllSpecs()
   call s:RunSpecs(s:last_spec)
 endfunction
 
+function! RunFailedSpecs()
+  let s:last_spec = ""
+  call s:RunSpecs(s:last_spec, "--only-failures")
+endfunction
+
 function! RunCurrentSpecFile()
   if s:InSpecFile()
     let s:last_spec_file = s:CurrentFilePath()
@@ -40,7 +45,8 @@ endfunction
 
 " === local functions ===
 
-function! s:RunSpecs(spec_location)
+function! s:RunSpecs(spec_location, ...)
+  let s:rspec_command = substitute(s:RspecCommand(), "{spec}", a:000 . "{spec}", "g")
   let s:rspec_command = substitute(s:RspecCommand(), "{spec}", a:spec_location, "g")
 
   execute s:rspec_command
